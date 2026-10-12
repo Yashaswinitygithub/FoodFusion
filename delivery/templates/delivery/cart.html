@@ -1,0 +1,209 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart | FoodFusion</title>
+
+    <link rel="stylesheet" href="{% static 'delivery/theme.css' %}">
+    <link rel="stylesheet" href="{% static 'delivery/cart.css' %}">
+</head>
+
+<body class="cart-page">
+
+    <!-- HEADER -->
+    <header class="cart-header">
+        <a href="{% url 'customer_home' username %}" class="cart-brand">
+            <span class="brand-icon">🍴</span>
+            <span>
+                FoodFusion
+                <small>GOOD FOOD, GOOD MOOD</small>
+            </span>
+        </a>
+
+        <nav class="cart-nav">
+            <a href="{% url 'customer_home' username %}" class="nav-home">
+                Home
+            </a>
+            <a href="{% url 'show_cart' username %}" class="nav-cart">
+                🛒 My Cart
+            </a>
+        </nav>
+    </header>
+
+    <!-- PAGE INTRO -->
+    <main class="cart-container">
+
+        <section class="cart-intro">
+            <div>
+                <span class="cart-eyebrow">YOUR FOOD SELECTION</span>
+                <h1>My Shopping Cart<span>.</span></h1>
+                <p>Delicious choices, just a few steps away.</p>
+            </div>
+
+            <a href="{% url 'customer_home' username %}" class="continue-link">
+                ← Continue Shopping
+            </a>
+        </section>
+
+        {% if cart_items %}
+
+        <div class="cart-layout">
+
+            <!-- CART ITEMS -->
+            <section class="cart-items-section">
+                <div class="cart-section-heading">
+                    <h2>Your Items</h2>
+                    <span>{{ cart_items|length }} item{{ cart_items|length|pluralize }}</span>
+                </div>
+
+                {% for cart_item in cart_items %}
+                <article class="cart-item">
+
+                    <div class="cart-food-image">
+                        {% if cart_item.item.picture %}
+                            <img
+                                src="{{ cart_item.item.picture }}"
+                                alt="{{ cart_item.item.name }}"
+                            >
+                        {% else %}
+                            <div class="food-placeholder">🍽️</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="cart-food-details">
+                        <h3>{{ cart_item.item.name }}</h3>
+
+                        <p class="cart-unit-price">
+                            ₹{{ cart_item.item.price }} each
+                        </p>
+
+                        <div class="quantity-control">
+                            <a
+                                href="{% url 'decrease_cart_item' cart_item.item.id username %}"
+                                class="quantity-btn"
+                                aria-label="Decrease quantity"
+                            >−</a>
+
+                            <span class="quantity-number">
+                                {{ cart_item.quantity }}
+                            </span>
+
+                            <a
+                                href="{% url 'increase_cart_item' cart_item.item.id username %}"
+                                class="quantity-btn"
+                                aria-label="Increase quantity"
+                            >+</a>
+                        </div>
+                    </div>
+
+                    <div class="cart-item-actions">
+                        <strong class="item-total">
+                            ₹{{ cart_item.total_price }}
+                        </strong>
+
+                        <a
+                            href="{% url 'remove_from_cart' cart_item.item.id username %}"
+                            class="remove-link"
+                            onclick="return confirm('Remove this item from your cart?');"
+                        >
+                            Remove
+                        </a>
+                    </div>
+
+                </article>
+                {% endfor %}
+
+                <a
+                    href="{% url 'customer_home' username %}"
+                    class="bottom-shopping-link"
+                >
+                    ← Add more delicious food
+                </a>
+            </section>
+
+            <!-- ORDER SUMMARY -->
+            <aside class="order-summary">
+                <div class="summary-top">
+                    <span class="summary-icon">🧾</span>
+                    <h2>Order Summary</h2>
+                    <p>Review your order before checkout.</p>
+                </div>
+
+                <div class="summary-line">
+                    <span>Items</span>
+                    <span>{{ cart_items|length }}</span>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-total">
+                    <span>Total Amount</span>
+                    <strong>₹{{ total_price }}</strong>
+                </div>
+
+                <p class="summary-note">
+                    Your final amount will be confirmed at checkout.
+                </p>
+
+                <a
+                    href="{% url 'checkout' username %}"
+                    class="checkout-btn"
+                >
+                    Proceed to Checkout
+                    <span>→</span>
+                </a>
+
+                <div class="secure-note">
+                    <span>🔒</span>
+                    <span>Secure checkout with Razorpay</span>
+                </div>
+
+                <div class="summary-benefit">
+                    <span>✓</span>
+                    Freshly prepared food
+                </div>
+
+                <div class="summary-benefit">
+                    <span>✓</span>
+                    Easy online payment
+                </div>
+            </aside>
+
+        </div>
+
+        {% else %}
+
+        <!-- EMPTY CART -->
+        <section class="empty-cart">
+            <div class="empty-cart-icon">🛒</div>
+            <span class="cart-eyebrow">NOTHING HERE YET</span>
+            <h2>Your cart is feeling hungry!</h2>
+            <p>
+                Explore our restaurants and add your favourite dishes
+                to get started.
+            </p>
+
+            <a
+                href="{% url 'customer_home' username %}"
+                class="checkout-btn empty-cart-btn"
+            >
+                Explore Restaurants <span>→</span>
+            </a>
+        </section>
+
+        {% endif %}
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="cart-footer">
+        <div class="footer-brand">FoodFusion<span>.</span></div>
+        <p>Made with ❤️ for food lovers.</p>
+        <a href="{% url 'customer_home' username %}">Back to Home</a>
+    </footer>
+
+</body>
+</html>

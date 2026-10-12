@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Update Restaurant - FoodFusion</title>
+
+    <link rel="stylesheet" href="{% static 'delivery/admin.css' %}">
+
+</head>
+
+
+<body>
+
+
+    <div class="admin-page">
+
+
+        <section class="menu-card">
+
+
+            <div class="card-heading">
+
+                <div>
+
+                    <span>
+                        FOODFUSION ADMIN
+                    </span>
+
+                    <h2>
+                        Update Restaurant
+                    </h2>
+
+                    <p>
+                        Edit restaurant information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form action="{% url 'update_restaurant' restaurant.id %}" method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- RESTAURANT NAME -->
+
+                <label>
+                    Restaurant Name
+                </label>
+
+                <input type="text" name="name" value="{{ restaurant.name }}" required>
+
+
+                <!-- PICTURE -->
+
+                <label>
+                    Picture URL
+                </label>
+
+                <input type="url" name="picture" value="{{ restaurant.picture }}" required>
+
+
+                <!-- CUISINE -->
+
+                <label>
+                    Cuisine
+                </label>
+
+                <input type="text" name="cuisine" value="{{ restaurant.cuisine }}" required>
+
+
+                <!-- RATING -->
+
+                <label>
+                    Rating
+                </label>
+
+                <input type="number" name="rating" min="0" max="5" step="0.1" value="{{ restaurant.rating }}" required>
+
+
+                <br>
+
+
+                <button type="submit" class="back-btn">
+
+                    💾 Update Restaurant
+
+                </button>
+
+
+            </form>
+
+
+            <br>
+
+
+            <a href="{% url 'admin_home' %}" class="back-btn">
+
+                ← Back to Dashboard
+
+            </a>
+
+
+        </section>
+
+
+    </div>
+
+
+</body>
+
+</html>

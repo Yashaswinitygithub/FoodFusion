@@ -1,0 +1,43 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Successful | FoodFusion</title>
+    <link rel="stylesheet" href="{% static 'delivery/login_success.css' %}">
+</head>
+
+<body>
+    <main class="success-container">
+        <section class="success-card">
+
+            <div class="brand">
+                <span class="brand-icon">F</span>
+                <span>Food<span class="brand-accent">Fusion</span></span>
+            </div>
+
+            <div class="success-icon">✓</div>
+
+            <span class="eyebrow">WELCOME BACK!</span>
+
+            <h1>Login successful!</h1>
+
+            <p>
+                You’re all set. Get ready to discover delicious food
+                and your favourite meals.
+            </p>
+
+            <a href="{% url 'customer_home' username %}" class="home-button">
+                Continue to FoodFusion <span>→</span>
+            </a>
+
+            <div class="footer-note">
+                Made with <span>♥</span> for food lovers
+            </div>
+
+        </section>
+    </main>
+</body>
+</html>

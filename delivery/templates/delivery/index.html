@@ -1,0 +1,192 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#F7F3E9">
+    <title>FoodFusion | Good food, good mood</title>
+
+    <link rel="stylesheet" href="{% static 'delivery/theme.css' %}">
+    <link rel="stylesheet" href="{% static 'delivery/home.css' %}">
+</head>
+<body class="page-home">
+
+<header class="site-header">
+    <a class="brand" href="{% url 'index' %}" aria-label="FoodFusion home">
+        <span class="brand-mark">F</span>
+        <span>Food<span class="brand-highlight">Fusion</span></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+        <a href="#why-us">Why FoodFusion</a>
+        <a href="#how-it-works">How it works</a>
+    </nav>
+
+    <div class="nav-actions">
+        <a class="btn btn-quiet" href="{% url 'signin' %}">Sign in</a>
+        <a class="btn btn-primary" href="{% url 'signup' %}">
+            Get started <span aria-hidden="true">↗</span>
+        </a>
+    </div>
+</header>
+
+<main>
+    <section class="hero container">
+        <div class="hero-copy">
+            <p class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                GOOD FOOD. NO FUSS.
+            </p>
+
+            <h1>
+                Your next<br>
+                great meal is<br>
+                <em>closer than ever.</em>
+            </h1>
+
+            <p class="hero-description">
+                From comforting favourites to exciting new discoveries,
+                find something delicious and make every meal feel special.
+            </p>
+
+            <div class="hero-actions">
+                <a class="btn btn-primary btn-large"
+                   href="{% url 'signup' %}">
+                    Discover deliciousness <span aria-hidden="true">→</span>
+                </a>
+
+                <a class="text-link" href="{% url 'signin' %}">
+                    Already have an account?
+                </a>
+            </div>
+
+            <div class="hero-proof">
+                <div class="proof-avatars" aria-hidden="true">
+                    <span>🍜</span>
+                    <span>🍕</span>
+                    <span>🥗</span>
+                </div>
+                <div>
+                    <strong>Something for every craving</strong>
+                    <small>Explore · Choose · Enjoy</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-art" role="img"
+             aria-label="Illustration of a freshly made burger on a plate">
+            <div class="art-orbit orbit-one"></div>
+            <div class="art-orbit orbit-two"></div>
+
+            <div class="food-sticker sticker-top">
+                FRESH<br>
+                <b>FLAVOUR</b>
+            </div>
+
+            <div class="food-plate">
+                <div class="burger">
+                    <div class="bun bun-top">
+                        <i></i><i></i><i></i><i></i><i></i><i></i>
+                    </div>
+                    <div class="lettuce"></div>
+                    <div class="cheese"></div>
+                    <div class="patty"></div>
+                    <div class="onion"></div>
+                    <div class="bun bun-bottom"></div>
+                </div>
+            </div>
+
+            <div class="food-sticker sticker-bottom">
+                <span>✳</span> A LITTLE<br>
+                <b>HAPPINESS</b>
+            </div>
+
+            <span class="spark spark-one" aria-hidden="true">✳</span>
+            <span class="spark spark-two" aria-hidden="true">✦</span>
+            <span class="spark spark-three" aria-hidden="true">•</span>
+        </div>
+    </section>
+
+    <section class="feature-strip container" id="why-us">
+        <article class="feature">
+            <span class="feature-icon">⌁</span>
+            <div>
+                <h2>Find your favourite</h2>
+                <p>Explore restaurants and discover their menus in one place.</p>
+            </div>
+        </article>
+
+        <article class="feature">
+            <span class="feature-icon coral-icon">♡</span>
+            <div>
+                <h2>Order with ease</h2>
+                <p>Choose the dishes you love and review your cart simply.</p>
+            </div>
+        </article>
+
+        <article class="feature">
+            <span class="feature-icon gold-icon">✳</span>
+            <div>
+                <h2>Checkout smoothly</h2>
+                <p>Move from choosing your meal to checkout with ease.</p>
+            </div>
+        </article>
+    </section>
+
+    <section class="how-section container" id="how-it-works">
+        <div>
+            <p class="eyebrow">A BETTER WAY TO ORDER</p>
+            <h2>Three little steps.<br><em>One happy meal.</em></h2>
+            <p class="section-description">
+                Good food should be easy to find, simple to order,
+                and even better to enjoy.
+            </p>
+        </div>
+
+        <div class="steps">
+            <article>
+                <b>01</b>
+                <span>Discover</span>
+                <p>Browse restaurants and explore the available dishes.</p>
+            </article>
+
+            <article>
+                <b>02</b>
+                <span>Choose</span>
+                <p>Add your favourite food to your cart.</p>
+            </article>
+
+            <article>
+                <b>03</b>
+                <span>Enjoy</span>
+                <p>Review your order and continue to checkout.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="closing-cta">
+        <div class="closing-cta-inner">
+            <p class="eyebrow">YOUR NEXT FAVOURITE MEAL AWAITS</p>
+            <h2>Come hungry.<br><em>Leave happy.</em></h2>
+            <a class="btn btn-light btn-large" href="{% url 'signup' %}">
+                Find your flavour <span aria-hidden="true">→</span>
+            </a>
+        </div>
+        <div class="cta-decoration" aria-hidden="true">✳</div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <a class="brand" href="{% url 'index' %}">
+        <span class="brand-mark">F</span>
+        <span>Food<span class="brand-highlight">Fusion</span></span>
+    </a>
+
+    <p>Good food brings people together.</p>
+    <small>© {% now "Y" %} FoodFusion. Made with care.</small>
+</footer>
+
+</body>
+</html>

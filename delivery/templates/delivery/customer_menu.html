@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ restaurant.name }} | FoodFusion</title>
+
+    <link rel="stylesheet" href="{% static 'delivery/theme.css' %}">
+    <link rel="stylesheet" href="{% static 'delivery/customer_menu.css' %}">
+</head>
+
+<body class="page-menu">
+
+    <!-- HEADER -->
+    <header class="menu-header">
+        <a href="{% url 'customer_home' username %}" class="brand">
+            <span class="brand-icon">F</span>
+            <span>FoodFusion<small>GOOD FOOD, GOOD MOOD</small></span>
+        </a>
+
+        <nav class="menu-nav">
+            <a href="{% url 'customer_home' username %}" class="home-link">
+                Home
+            </a>
+
+            <span class="welcome-user">Hi, {{ username }}!</span>
+
+            <a href="{% url 'show_cart' username %}" class="cart-link">
+                🛒 My Cart
+            </a>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- RESTAURANT HERO -->
+
+
+        <!-- RESTAURANT HERO -->
+        <section class="restaurant-hero{% if 'domino' in restaurant.name|lower %} dominos-hero{% endif %}">
+            <div class="hero-overlay">
+
+                <span class="eyebrow">YOUR NEXT DELICIOUS MEAL</span>
+
+                <h1>{{ restaurant.name }}</h1>
+
+                <p class="restaurant-cuisine">
+                    {{ restaurant.cuisine }}
+                </p>
+
+                <div class="restaurant-meta">
+                    <span>⭐ {{ restaurant.rating }} Rating</span>
+                    <span>Freshly prepared favourites</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MENU SECTION -->
+        <section class="menu-section">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">MADE WITH LOVE</span>
+
+                    <h2>Explore the Menu<span>.</span></h2>
+
+                    <p>
+                        Discover something delicious for your next meal.
+                    </p>
+                </div>
+
+                <div class="menu-count">
+                    Our Food Selection
+                </div>
+            </div>
+
+            <div class="menu-grid">
+
+                {% for item in itemList %}
+                <article class="menu-card">
+
+                    <!-- FOOD IMAGE -->
+                    <div class="food-image">
+                        {% if item.picture %}
+                        <img src="{{ item.picture }}" alt="{{ item.name }}" loading="lazy">
+                        {% else %}
+                        <div class="image-placeholder">🍽️</div>
+                        {% endif %}
+
+                        {% if item.vegeterian %}
+                        <span class="food-tag">🟢 Veg</span>
+                        {% else %}
+                        <span class="food-tag">🔴 Non-Veg</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- FOOD DETAILS -->
+                    <div class="menu-content">
+                        <h3>{{ item.name }}</h3>
+
+                        <p class="food-description">
+                            {{ item.description }}
+                        </p>
+
+                        <div class="food-card-footer">
+                            <div class="food-price">
+                                ₹{{ item.price }}
+                            </div>
+
+                            <!-- ADD TO CART: NO POPUP -->
+                            <a href="{% url 'add_to_cart' item.id username %}" class="add-btn">
+                                Add to Cart <span>+</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </article>
+
+                {% empty %}
+                <div class="empty-menu">
+                    <div class="empty-icon">🍲</div>
+
+                    <h3>Our menu is getting ready!</h3>
+
+                    <p>
+                        This restaurant hasn't added any food items yet.
+                    </p>
+
+                    <a href="{% url 'customer_home' username %}" class="back-btn">
+                        Explore other restaurants
+                    </a>
+                </div>
+                {% endfor %}
+
+            </div>
+        </section>
+
+        <!-- BOTTOM BANNER -->
+        <section class="menu-bottom-banner">
+            <span>GOOD FOOD. GREAT MOMENTS.</span>
+
+            <h2>Made for your cravings.</h2>
+
+            <p>
+                Choose your favourites and enjoy your meal with FoodFusion.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="menu-footer">
+        <a href="{% url 'customer_home' username %}">
+            ← Back to Restaurants
+        </a>
+
+        <p>
+            © FoodFusion · Bringing happiness to your plate.
+        </p>
+    </footer>
+
+</body>
+
+</html>

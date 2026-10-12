@@ -1,0 +1,430 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Menu - {{ restaurant.name }}</title>
+
+    <link rel="stylesheet"
+          href="{% static 'delivery/admin.css' %}">
+
+</head>
+
+
+<body>
+
+
+<div class="admin-page">
+
+
+    <!-- HEADER -->
+
+    <header class="admin-header">
+
+        <div>
+
+            <p class="eyebrow">
+                FOODFUSION ADMIN
+            </p>
+
+            <h1>
+                Manage Menu
+            </h1>
+
+            <p>
+                {{ restaurant.name }}
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'admin_home' %}"
+           class="back-btn">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </header>
+
+
+
+    <!-- ERROR -->
+
+    {% if error %}
+
+        <div class="error-message">
+
+            {{ error }}
+
+        </div>
+
+    {% endif %}
+
+
+
+    <!-- ADD ITEM -->
+
+    <section class="menu-card">
+
+        <div class="card-heading">
+
+            <div>
+
+                <span>
+                    ADD NEW ITEM
+                </span>
+
+                <h2>
+                    Add Food Item
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <form
+            method="POST"
+            action="{% url 'update_menu' restaurant.id %}"
+            class="menu-form"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Item Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Example: Chicken Burger"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Price
+                    </label>
+
+                    <input
+                        type="number"
+                        name="price"
+                        step="0.01"
+                        placeholder="Example: 250"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        placeholder="Describe the food item..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Food Image URL
+                    </label>
+
+                    <input
+                        type="url"
+                        name="picture"
+                        placeholder="https://example.com/image.jpg"
+                    >
+
+                </div>
+
+
+                <div class="checkbox-group">
+
+                    <input
+                        type="checkbox"
+                        name="vegeterian"
+                        id="vegeterian"
+                    >
+
+                    <label for="vegeterian">
+                        Vegetarian
+                    </label>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="add-item-btn"
+            >
+
+                + Add Item
+
+            </button>
+
+
+        </form>
+
+    </section>
+
+
+
+    <!-- EXISTING ITEMS -->
+
+    <section class="menu-card">
+
+        <div class="card-heading">
+
+            <div>
+
+                <span>
+                    CURRENT MENU
+                </span>
+
+                <h2>
+                    {{ restaurant.name }} Items
+                </h2>
+
+            </div>
+
+            <strong>
+                {{ itemList|length }} Items
+            </strong>
+
+        </div>
+
+
+        {% if itemList %}
+
+
+            <div class="item-list">
+
+
+                {% for item in itemList %}
+
+
+                    <div class="item-row">
+
+
+                        <!-- IMAGE -->
+
+                        <div class="item-image">
+
+                            {% if item.picture %}
+
+                                <img
+                                    src="{{ item.picture }}"
+                                    alt="{{ item.name }}"
+                                >
+
+                            {% else %}
+
+                                🍽️
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- DETAILS -->
+
+                        <div class="item-details">
+
+                            <h3>
+                                {{ item.name }}
+                            </h3>
+
+                            <p>
+                                {{ item.description }}
+                            </p>
+
+                            <strong>
+                                ₹{{ item.price }}
+                            </strong>
+
+                            {% if item.vegeterian %}
+
+                                <span class="veg">
+                                    Vegetarian
+                                </span>
+
+                            {% else %}
+
+                                <span class="nonveg">
+                                    Non-Vegetarian
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="item-actions">
+
+
+                            <!-- UPDATE -->
+
+                            <details class="edit-box">
+
+                                <summary>
+                                    ✏️ Update
+                                </summary>
+
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'update_item' item.id %}"
+                                >
+
+                                    {% csrf_token %}
+
+
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value="{{ item.name }}"
+                                        required
+                                    >
+
+
+                                    <textarea
+                                        name="description"
+                                        required
+                                    >{{ item.description }}</textarea>
+
+
+                                    <input
+                                        type="number"
+                                        name="price"
+                                        step="0.01"
+                                        value="{{ item.price }}"
+                                        required
+                                    >
+
+
+                                    <input
+                                        type="url"
+                                        name="picture"
+                                        value="{{ item.picture }}"
+                                    >
+
+
+                                    <label>
+
+                                        <input
+                                            type="checkbox"
+                                            name="vegeterian"
+                                            {% if item.vegeterian %}
+                                                checked
+                                            {% endif %}
+                                        >
+
+                                        Vegetarian
+
+                                    </label>
+
+
+                                    <button
+                                        type="submit"
+                                        class="save-btn"
+                                    >
+
+                                        Save Changes
+
+                                    </button>
+
+                                </form>
+
+                            </details>
+
+
+                            <!-- DELETE -->
+
+                            <a
+                                href="{% url 'delete_item' item.id %}"
+                                class="delete-btn"
+                                onclick="return confirm('Delete {{ item.name }}?');"
+                            >
+
+                                🗑️ Delete
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty-menu">
+
+                <div>
+                    🍽️
+                </div>
+
+                <h3>
+                    No menu items yet
+                </h3>
+
+                <p>
+                    Add the first food item using the form above.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Update Menu Item - FoodFusion</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7f6;
+            color: #123;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 50px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #123;
+        }
+
+        .restaurant {
+            color: #ff5722;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .checkbox input {
+            width: auto;
+        }
+
+        .button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #ff5722;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: #e64a19;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #ff5722;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Update Menu Item ✏️</h1>
+
+        <div class="restaurant">
+            Restaurant: {{ restaurant.name }}
+        </div>
+
+        <form
+            action="{% url 'update_item' item.id %}"
+            method="post"
+        >
+
+            {% csrf_token %}
+
+            <label>Item Name</label>
+
+            <input
+                type="text"
+                name="name"
+                value="{{ item.name }}"
+                required
+            >
+
+
+            <label>Description</label>
+
+            <textarea
+                name="description"
+                required
+            >{{ item.description }}</textarea>
+
+
+            <label>Price</label>
+
+            <input
+                type="number"
+                name="price"
+                step="0.01"
+                value="{{ item.price }}"
+                required
+            >
+
+
+            <label>Picture URL</label>
+
+            <input
+                type="url"
+                name="picture"
+                value="{{ item.picture }}"
+            >
+
+
+            <div class="checkbox">
+
+                <input
+                    type="checkbox"
+                    name="vegeterian"
+                    {% if item.vegeterian %}checked{% endif %}
+                >
+
+                <label style="margin: 0;">
+                    Vegetarian
+                </label>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="button"
+            >
+                💾 Update Item
+            </button>
+
+        </form>
+
+
+        <a
+            href="{% url 'open_update_menu' restaurant.id %}"
+            class="back"
+        >
+            ← Back to Menu Management
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

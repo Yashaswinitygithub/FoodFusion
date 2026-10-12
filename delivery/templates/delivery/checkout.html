@@ -1,0 +1,220 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | FoodFusion</title>
+    <link rel="stylesheet" href="{% static 'delivery/theme.css' %}">
+    <link rel="stylesheet" href="{% static 'delivery/checkout.css' %}">
+</head>
+
+<body class="checkout-page">
+
+<header class="checkout-navbar">
+    <a href="{% url 'customer_home' username %}" class="brand">
+        <span class="brand-icon">F</span>
+        <span>Food<span class="brand-accent">Fusion</span>
+            <small>Good food, happy moments.</small>
+        </span>
+    </a>
+
+    <div class="nav-actions">
+        <span class="welcome-text">Hello, {{ username }} 👋</span>
+        <a href="{% url 'customer_home' username %}" class="nav-link">⌂ Home</a>
+        <a href="{% url 'show_cart' username %}" class="nav-link">🛒 Cart</a>
+    </div>
+</header>
+
+<main class="checkout-container">
+    <div class="checkout-heading">
+        <span class="eyebrow">ALMOST THERE!</span>
+        <h1>Complete your <span>order.</span></h1>
+        <p>Review your delicious choices before proceeding to payment.</p>
+    </div>
+
+    <form id="csrf-form" style="display:none;">
+        {% csrf_token %}
+    </form>
+
+    <div class="checkout-layout">
+        <section class="checkout-card order-card">
+            <div class="card-heading">
+                <div>
+                    <span class="section-label">YOUR SELECTION</span>
+                    <h2>Order summary</h2>
+                </div>
+                <span class="bag-icon">🛍️</span>
+            </div>
+
+            {% if error %}
+                <div class="checkout-error">
+                    <strong>We couldn't continue with checkout.</strong>
+                    <p>{{ error }}</p>
+                    <a href="{% url 'show_cart' username %}" class="back-cart-btn">
+                        ← Return to cart
+                    </a>
+                </div>
+            {% else %}
+
+                <div class="checkout-items">
+                    {% for cart_item in cart_items %}
+                    <article class="checkout-item">
+                        <div class="checkout-image-box">
+                            {% if cart_item.item.picture %}
+                            <img
+                                src="{{ cart_item.item.picture }}"
+                                alt="{{ cart_item.item.name }}"
+                                class="checkout-food-image"
+                                loading="lazy"
+                            >
+                            {% else %}
+                            <div class="food-placeholder">🍽️</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="checkout-item-info">
+                            <h3>{{ cart_item.item.name }}</h3>
+                            <p>₹{{ cart_item.item.price|floatformat:2 }} each</p>
+                            <span class="quantity-pill">Qty: {{ cart_item.quantity }}</span>
+                        </div>
+
+                        <strong class="item-total">
+                            ₹{{ cart_item.total_price|floatformat:2 }}
+                        </strong>
+                    </article>
+                    {% empty %}
+                    <div class="empty-order">
+                        <span>🛒</span>
+                        <h3>Your cart is empty</h3>
+                        <p>Add some delicious food before checkout.</p>
+                        <a href="{% url 'customer_home' username %}">Explore menu →</a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <a href="{% url 'show_cart' username %}" class="edit-cart-link">
+                    ← Edit your cart
+                </a>
+            {% endif %}
+        </section>
+
+        {% if not error %}
+        <aside class="checkout-card payment-card">
+            <div class="secure-label">
+                <span class="secure-icon">✓</span>
+                Secure checkout
+            </div>
+
+            <h2>Payment details</h2>
+            <p class="payment-intro">Here's your final order total.</p>
+
+            <div class="price-summary">
+                <div class="summary-row">
+                    <span>Items in order</span>
+                    <strong>{{ cart_items|length }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Delivery fee</span>
+                    <strong class="free">FREE</strong>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-row total-row">
+                    <span>Total payable</span>
+                    <strong>₹{{ total_price|floatformat:2 }}</strong>
+                </div>
+            </div>
+
+            <div class="payment-note">
+                <span>🔒</span>
+                <p>Your payment is processed securely through Razorpay.</p>
+            </div>
+
+            <button
+                type="button"
+                id="pay-button"
+                class="razorpay-btn"
+                {% if not cart_items %}disabled{% endif %}
+            >
+                <span>Pay ₹{{ total_price|floatformat:2 }}</span>
+                <span class="button-arrow">→</span>
+            </button>
+
+            <p class="payment-caption">Powered by Razorpay</p>
+
+            <a href="{% url 'show_cart' username %}" class="back-cart-btn">
+                Continue shopping
+            </a>
+        </aside>
+        {% endif %}
+    </div>
+
+    <div class="checkout-footer">
+        <span>FoodFusion</span> · Made with ♥ for food lovers
+    </div>
+</main>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+{% if order_id %}
+<script>
+    var options = {
+        "key": "{{ razorpay_key_id }}",
+        "amount": "{{ razorpay_amount }}",
+        "currency": "INR",
+        "name": "FoodFusion",
+        "description": "FoodFusion Food Order",
+        "order_id": "{{ order_id }}",
+
+        "prefill": {
+            "name": "{{ username|escapejs }}"
+        },
+
+        "theme": {
+            "color": "#10483D"
+        },
+
+        "handler": function (response) {
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "{% url 'payment_success' username %}";
+
+            var csrfToken = document.querySelector(
+                "#csrf-form input[name='csrfmiddlewaretoken']"
+            );
+
+            var fields = {
+                "csrfmiddlewaretoken": csrfToken ? csrfToken.value : "",
+                "razorpay_payment_id": response.razorpay_payment_id,
+                "razorpay_order_id": response.razorpay_order_id,
+                "razorpay_signature": response.razorpay_signature
+            };
+
+            Object.keys(fields).forEach(function (key) {
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = key;
+                input.value = fields[key];
+                form.appendChild(input);
+            });
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    };
+
+    var razorpay = new Razorpay(options);
+
+    document.getElementById("pay-button").onclick = function (event) {
+        event.preventDefault();
+        razorpay.open();
+    };
+</script>
+{% endif %}
+
+</body>
+</html>

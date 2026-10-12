@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - FoodFusion</title>
+
+    <link rel="stylesheet" href="{% static 'delivery/theme.css' %}">
+    <link rel="stylesheet" href="{% static 'delivery/auth.css' %}">
+</head>
+
+<body class="page-signup">
+
+    <header class="signup-header">
+        <a href="{% url 'index' %}" class="brand">
+            <span class="brand-mark">F</span>
+            <span>Food<span class="brand-highlight">Fusion</span></span>
+        </a>
+
+        <a href="{% url 'signin' %}" class="header-link">
+            Already a member? <strong>Sign in ↗</strong>
+        </a>
+    </header>
+
+    <main class="signup-layout">
+
+        <section class="signup-intro">
+            <p class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                GOOD FOOD. GOOD MOOD.
+            </p>
+
+            <h1>Your next<br>favourite meal<br>starts <em>here.</em></h1>
+
+            <p class="intro-description">
+                Create your FoodFusion account and discover delicious
+                meals, explore restaurants, and make every order special.
+            </p>
+
+            <div class="signup-perks">
+                <div class="perk">
+                    <span class="perk-icon">♡</span>
+                    <div>
+                        <strong>Find your favourites</strong>
+                        <p>Discover food you'll love.</p>
+                    </div>
+                </div>
+
+                <div class="perk">
+                    <span class="perk-icon perk-coral">✳</span>
+                    <div>
+                        <strong>Easy ordering</strong>
+                        <p>Your next meal is just a few clicks away.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="signup-note">
+                <span>✦</span>
+                A little happiness, served fresh.
+            </div>
+        </section>
+
+        <section class="signup-card">
+            <div class="card-heading">
+                <div class="card-icon">F</div>
+                <p class="card-eyebrow">LET'S GET STARTED</p>
+                <h2>Create account</h2>
+                <p class="subtitle">Enter your details to join FoodFusion.</p>
+            </div>
+
+            <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" type="text" name="username"
+                           placeholder="Choose a username"
+                           autocomplete="username" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input id="email" type="email" name="email"
+                               placeholder="you@example.com"
+                               autocomplete="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobile">Mobile number</label>
+                        <input id="mobile" type="tel" name="mobile"
+                               placeholder="10-digit number"
+                               pattern="[0-9]{10}" maxlength="10"
+                               inputmode="numeric"
+                               autocomplete="tel" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="password"
+                           placeholder="Create a password"
+                           autocomplete="new-password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Delivery address</label>
+                    <textarea id="address" name="address" rows="2"
+                              placeholder="Enter your delivery address"
+                              autocomplete="street-address" required></textarea>
+                </div>
+
+                <button type="submit" class="signup-btn">
+                    Create account <span>→</span>
+                </button>
+            </form>
+
+            <p class="signin-link">
+                Already have an account?
+                <a href="{% url 'signin' %}">Sign in</a>
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="signup-footer">
+        <span>© 2026 FoodFusion</span>
+        <span>Good food brings people together.</span>
+    </footer>
+
+</body>
+</html>
+

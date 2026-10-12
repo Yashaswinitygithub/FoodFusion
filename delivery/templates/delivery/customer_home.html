@@ -1,0 +1,227 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodFusion | Discover Restaurants</title>
+
+
+    <link rel="stylesheet" href="{% static 'delivery/theme.css' %}">
+    <link rel="stylesheet" href="{% static 'delivery/customer_home.css' %}">
+
+<body class="page-customer">
+
+    <!-- HEADER -->
+    <header class="customer-header">
+        <div class="customer-nav">
+
+            <a href="{% url 'index' %}" class="customer-brand">
+                <span class="brand-mark">F</span>
+                <span>Food<span class="brand-highlight">Fusion</span></span>
+            </a>
+
+            <nav class="customer-nav-links">
+                <a href="#restaurants" class="nav-link active">
+                    Restaurants
+                </a>
+
+                <a href="{% url 'show_cart' username %}" class="cart-link">
+                    <span class="cart-icon">🛒</span>
+                    My Cart
+                </a>
+
+                <span class="customer-welcome">
+                    Hi, {{ username }}
+                </span>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="customer-main">
+
+        <!-- HERO SECTION -->
+        <section class="customer-hero">
+
+            <div class="hero-content">
+                <span class="hero-eyebrow">
+                    GOOD FOOD, GOOD MOOD
+                </span>
+
+                <h1>
+                    Your next favourite
+                    <span>meal awaits.</span>
+                </h1>
+
+                <p>
+                    Discover delicious food from restaurants you love.
+                    Choose your favourites and enjoy a better mealtime
+                    with FoodFusion.
+                </p>
+
+                <a href="#restaurants" class="hero-button">
+                    Explore Restaurants
+                    <span>→</span>
+                </a>
+
+                <div class="hero-trust">
+                    <span class="trust-dot"></span>
+                    Fresh choices. Happy meals.
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-circle"></div>
+
+                <div class="hero-food-card">
+                    <div class="hero-food-emoji">🍕</div>
+                    <div class="hero-food-caption">
+                        <span>YOUR FOOD JOURNEY</span>
+                        <strong>Made delicious.</strong>
+                    </div>
+                </div>
+
+                <div class="floating-tag tag-top">
+                    <span>🍔</span>
+                    Delicious choices
+                </div>
+
+                <div class="floating-tag tag-bottom">
+                    <span>❤️</span>
+                    Made for food lovers
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- RESTAURANT SECTION -->
+        <section class="restaurant-section" id="restaurants">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-eyebrow">
+                        FIND YOUR FAVOURITE
+                    </span>
+
+                    <h2>Explore restaurants<span>.</span></h2>
+
+                    <p>
+                        Pick a restaurant and discover something delicious.
+                    </p>
+                </div>
+
+                <span class="restaurant-count">
+                    {{ restaurants|length }} restaurants
+                </span>
+            </div>
+
+
+            {% if restaurants %}
+
+            <div class="restaurant-container">
+
+                {% for restaurant in restaurants %}
+
+                <article class="restaurant-card">
+
+                    <div class="restaurant-image-container">
+
+                        {% if restaurant.picture %}
+                        <img src="{{ restaurant.picture }}" alt="{{ restaurant.name }}" class="restaurant-image"
+                            loading="lazy">
+                        {% else %}
+                        <div class="restaurant-image-placeholder">
+                            🍽️
+                        </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="restaurant-details">
+
+                        <div class="restaurant-title-row">
+                            <h3>{{ restaurant.name }}</h3>
+
+                            {% if restaurant.rating %}
+                            <span class="restaurant-rating">
+                                ★ {{ restaurant.rating }}
+                            </span>
+                            {% endif %}
+                        </div>
+
+                        <p class="restaurant-cuisine">
+                            {{ restaurant.cuisine|default:"Delicious food" }}
+                        </p>
+
+                        <div class="restaurant-card-footer">
+                            <span class="menu-hint">
+                                Explore the menu
+                            </span>
+
+                            <a href="{% url 'view_menu' restaurant.id username %}" class="menu-button">
+                                View Menu <span>→</span>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <div class="empty-restaurants">
+                <div class="empty-icon">🍽️</div>
+
+                <h3>Something delicious is on its way!</h3>
+
+                <p>
+                    No restaurants are available right now.
+                    Please check back soon.
+                </p>
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- BOTTOM BANNER -->
+        <section class="customer-bottom-banner">
+            <div>
+                <span class="banner-eyebrow">YOUR NEXT BITE STARTS HERE</span>
+                <h2>Good food brings us together.</h2>
+                <p>Find your favourite flavours with FoodFusion.</p>
+            </div>
+
+            <a href="#restaurants" class="banner-button">
+                Find Your Meal <span>→</span>
+            </a>
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="customer-footer">
+        <a href="{% url 'index' %}" class="footer-brand">
+            Food<span>Fusion</span>
+        </a>
+
+        <p>Discover good food. Enjoy every bite.</p>
+
+        <span>© 2026 FoodFusion</span>
+    </footer>
+
+</body>
+
+</html>

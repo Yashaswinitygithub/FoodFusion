@@ -1,0 +1,273 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Update Menu Item - FoodFusion</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f8f4;
+            color: #123f35;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #123f35;
+        }
+
+        .logo span {
+            color: #ff6b35;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            margin-left: 25px;
+            color: #123f35;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 50px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .label {
+            color: #ff6b35;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-family: Georgia, serif;
+            font-size: 38px;
+            margin: 10px 0;
+        }
+
+        .restaurant {
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .checkbox input {
+            width: auto;
+        }
+
+        .btn {
+            margin-top: 30px;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #145c4b;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #0d4639;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🍕 Food<span>Fusion</span>
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'admin_home' %}">
+            Dashboard
+        </a>
+
+        <a href="{% url 'open_update_menu' item.restaurant.id %}">
+            Menu
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="label">
+            MENU MANAGEMENT
+        </div>
+
+        <h1>
+            Update Menu Item
+        </h1>
+
+        <p class="restaurant">
+            Restaurant: <strong>{{ item.restaurant.name }}</strong>
+        </p>
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <label>
+                Item Name
+            </label>
+
+            <input
+                type="text"
+                name="name"
+                value="{{ item.name }}"
+                required
+            >
+
+
+            <label>
+                Description
+            </label>
+
+            <textarea
+                name="description"
+                required
+            >{{ item.description }}</textarea>
+
+
+            <label>
+                Price
+            </label>
+
+            <input
+                type="number"
+                name="price"
+                value="{{ item.price }}"
+                step="0.01"
+                required
+            >
+
+
+            <label>
+                Picture URL
+            </label>
+
+            <input
+                type="url"
+                name="picture"
+                value="{{ item.picture }}"
+            >
+
+
+            <div class="checkbox">
+
+                <input
+                    type="checkbox"
+                    name="vegeterian"
+                    {% if item.vegeterian %}checked{% endif %}
+                >
+
+                <span>
+                    Vegetarian
+                </span>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn"
+            >
+                Save Changes
+            </button>
+
+        </form>
+
+
+        <a
+            href="{% url 'open_update_menu' item.restaurant.id %}"
+            class="back"
+        >
+            ← Back to Menu Management
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

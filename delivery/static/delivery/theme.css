@@ -1,0 +1,75 @@
+
+/* FoodFusion shared premium theme */
+:root {
+    --cream: #F7F3E9;
+    --green: #10483D;
+    --green-dark: #0A352D;
+    --coral: #F56B52;
+    --muted: #737B74;
+    --white: #FFFFFF;
+    --border: #E7E1D5;
+}
+
+body {
+    color: var(--green);
+    background: var(--cream);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+h1, h2, h3, h4 {
+    color: var(--green);
+}
+
+a {
+    transition: color .2s ease, background .2s ease;
+}
+
+input, textarea, select {
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 12px 14px;
+    font: inherit;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: 2px solid rgba(16, 72, 61, .18);
+    border-color: var(--green);
+}
+
+button, .primary-btn, .signup-btn, .add-item-btn {
+    border: none;
+    border-radius: 9px;
+    background: var(--green);
+    color: var(--white);
+    padding: 12px 20px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover, .primary-btn:hover,
+.signup-btn:hover, .add-item-btn:hover {
+    background: var(--green-dark);
+}
+
+.signup-card, .admin-card, .menu-card,
+.restaurant-card, .item-card {
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: var(--white);
+    box-shadow: 0 12px 32px rgba(16, 72, 61, .07);
+}
+
+.brand span, .eyebrow, .rating,
+.section-accent {
+    color: var(--coral);
+}
+
+.subtitle, .muted, .cuisine {
+    color: var(--muted);
+}
+
+@media (max-width: 600px) {
+    .signup-card, .admin-card, .menu-card {
+        border-radius: 14px;
+    }
+}

@@ -1,0 +1,312 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FoodFusion Admin</title>
+
+    <link rel="stylesheet"
+          href="{% static 'delivery/admin.css' %}">
+
+</head>
+
+
+<body>
+
+<div class="admin-page">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+
+    <header class="admin-header">
+
+        <div>
+
+            <p class="eyebrow">
+                FOODFUSION ADMIN
+            </p>
+
+            <h1>
+                Admin Dashboard
+            </h1>
+
+            <p>
+                Manage restaurants and food menus.
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'signin' %}"
+           class="back-btn">
+
+            Logout
+
+        </a>
+
+    </header>
+
+
+    <!-- =================================================
+         OVERVIEW
+    ================================================== -->
+
+    <section class="menu-card">
+
+        <div class="card-heading">
+
+            <div>
+
+                <span>
+                    OVERVIEW
+                </span>
+
+                <h2>
+                    Food Management
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <!-- RESTAURANT COUNT -->
+
+            <div>
+
+                <h3>
+                    Restaurants
+                </h3>
+
+                <h1>
+                    {{ restaurants|length }}
+                </h1>
+
+                <a href="{% url 'open_show_restaurant' %}"
+                   class="back-btn">
+
+                    Manage Restaurants
+
+                </a>
+
+            </div>
+
+
+            <!-- MENU COUNT -->
+
+            <div>
+
+                <h3>
+                    Menu Items
+                </h3>
+
+                <h1>
+                    {{ total_items }}
+                </h1>
+
+                <p>
+                    Total food items
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         RESTAURANT MANAGEMENT
+    ================================================== -->
+
+    <section class="menu-card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <span>
+                    RESTAURANTS
+                </span>
+
+                <h2>
+                    Restaurant Management
+                </h2>
+
+            </div>
+
+
+            <!-- ADD RESTAURANT -->
+
+            <a href="{% url 'add_restaurant' %}"
+               class="back-btn">
+
+                + Add Restaurant
+
+            </a>
+
+        </div>
+
+
+        {% if restaurants %}
+
+
+            <div class="item-list">
+
+
+                {% for restaurant in restaurants %}
+
+
+                    <div class="item-row">
+
+
+                        <!-- RESTAURANT IMAGE -->
+
+                        <div class="item-image">
+
+                            {% if restaurant.picture %}
+
+                                <img
+                                    src="{{ restaurant.picture }}"
+                                    alt="{{ restaurant.name }}"
+                                >
+
+                            {% else %}
+
+                                🍽️
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- RESTAURANT DETAILS -->
+
+                        <div class="item-details">
+
+                            <h3>
+                                {{ restaurant.name }}
+                            </h3>
+
+                            <p>
+                                {{ restaurant.cuisine }}
+                            </p>
+
+                            <strong>
+                                ⭐ {{ restaurant.rating }}/5
+                            </strong>
+
+                        </div>
+
+
+                        <!-- ACTION BUTTONS -->
+
+                        <div class="item-actions">
+
+
+                            <!-- UPDATE -->
+
+                            <a
+                                href="{% url 'open_update_restaurant' restaurant.id %}"
+                                class="back-btn"
+                            >
+
+                                ✏️ Update
+
+                            </a>
+
+
+                            <!-- MANAGE MENU -->
+
+                            <a
+                                href="{% url 'open_update_menu' restaurant.id %}"
+                                class="back-btn"
+                            >
+
+                                🍽️ Manage Menu
+
+                            </a>
+
+
+                            <!-- DELETE -->
+
+                            <a
+                                href="{% url 'delete_restaurant' restaurant.id %}"
+                                class="delete-btn"
+                                onclick="return confirm('Are you sure you want to delete {{ restaurant.name }}? This will also delete its menu items.');"
+                            >
+
+                                🗑️ Delete
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- NO RESTAURANTS -->
+
+            <div class="empty-menu">
+
+                <div>
+                    🍽️
+                </div>
+
+                <h3>
+                    No restaurants available
+                </h3>
+
+                <p>
+                    Add your first restaurant.
+                </p>
+
+                <br>
+
+                <a href="{% url 'add_restaurant' %}"
+                   class="back-btn">
+
+                    + Add Restaurant
+
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</div>
+
+
+</body>
+
+</html>
