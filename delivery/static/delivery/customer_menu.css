@@ -1,5 +1,7 @@
+
 /* =========================================
    FOODFUSION - RESTAURANT MENU PAGE
+   Theme: Forest Green + Cream
 ========================================= */
 
 .page-menu {
@@ -20,12 +22,12 @@
 .menu-header {
     min-height: 82px;
     padding: 16px 7%;
-    background: #fffdf8;
+    background: #FFFDF8;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    border-bottom: 1px solid #e8e2d5;
+    border-bottom: 1px solid #E8E2D5;
 }
 
 .brand {
@@ -54,7 +56,7 @@
     margin-top: 4px;
     font-size: 9px;
     letter-spacing: 1.5px;
-    color: #78877d;
+    color: #78877D;
 }
 
 .menu-nav {
@@ -74,7 +76,7 @@
 }
 
 .welcome-user {
-    color: #6b756d;
+    color: #6B756D;
     font-size: 14px;
 }
 
@@ -83,10 +85,15 @@
     color: #FFFFFF;
     padding: 13px 20px;
     border-radius: 12px;
+    transition: background 0.2s ease;
+}
+
+.cart-link:hover {
+    background: #166534;
 }
 
 /* =========================================
-   RESTAURANT HERO - DEFAULT FOODFUSION GREEN
+   RESTAURANT HERO - GREEN THEME
 ========================================= */
 
 .restaurant-hero {
@@ -95,7 +102,7 @@
     width: 86%;
     max-width: 1400px;
     border-radius: 24px;
-    background: linear-gradient(115deg, #10483D, #286b53);
+    background: linear-gradient(115deg, #10483D, #286B53);
     color: #FFFFFF;
     display: flex;
     align-items: center;
@@ -160,16 +167,17 @@
 }
 
 /* =========================================
-   DOMINO'S BRAND - BLUE HERO
-   Requires the dominos-hero class in HTML
+   DOMINO'S HERO - FOODFUSION GREEN
+   Replaces all previous blue overrides
 ========================================= */
 
 .restaurant-hero.dominos-hero {
-    background: linear-gradient(115deg, #006491, #087EAE) !important;
+    background: linear-gradient(115deg, #14532D, #03451b) !important;
 }
 
 .restaurant-hero.dominos-hero h1 {
     color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
 }
 
 .restaurant-hero.dominos-hero .eyebrow {
@@ -205,7 +213,7 @@
 
 .section-heading h2 {
     margin: 10px 0;
-    color: #21ab7d;
+    color: #166534;
     font-size: clamp(27px, 4vw, 37px);
 }
 
@@ -215,7 +223,7 @@
 
 .section-heading p {
     margin: 0;
-    color: #155d15;
+    color: #53645A;
     font-size: 14px;
 }
 
@@ -329,7 +337,7 @@
 }
 
 /* =========================================
-   ADD TO CART BUTTON - NO POPUP
+   ADD TO CART BUTTON
 ========================================= */
 
 .add-btn {
@@ -337,7 +345,7 @@
     align-items: center;
     justify-content: center;
     gap: 7px;
-    background: #F56B52;
+    background: #166534;
     color: #FFFFFF;
     padding: 11px 17px;
     border-radius: 10px;
@@ -348,7 +356,7 @@
 }
 
 .add-btn:hover {
-    background: #DF533B;
+    background: #14532D;
 }
 
 .add-btn span {
@@ -391,6 +399,11 @@
     background: #10483D;
     text-decoration: none;
     font-weight: 700;
+    transition: background 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #166534;
 }
 
 /* =========================================
@@ -406,7 +419,7 @@
     border-radius: 20px;
 }
 
-.menu-bottom-banner>span {
+.menu-bottom-banner > span {
     color: #B64B35;
     font-size: 10px;
     font-weight: 800;
@@ -543,38 +556,4 @@
         flex-direction: column;
         align-items: flex-start;
     }
-}
-
-
-/* DEFAULT RESTAURANT HERO */
-.restaurant-hero {
-    color: #FFFFFF;
-}
-
-/* DOMINO'S BLUE BACKGROUND */
-.restaurant-hero.dominos-hero {
-    background: linear-gradient(115deg, #006491, #087EAE) !important;
-}
-
-/* Domino's blue hero */
-.restaurant-hero.dominos-hero {
-    background: linear-gradient(115deg, #006491, #087EAE) !important;
-}
-
-.restaurant-hero.dominos-hero h1 {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-}
-
-.restaurant-hero.dominos-hero .eyebrow {
-    color: #ffd0a7 !important;
-}
-
-.restaurant-hero.dominos-hero .restaurant-cuisine {
-    color: #ffffff !important;
-}
-
-.restaurant-hero.dominos-hero h1 {
-    color: #FFFFFF !important;
-    -webkit-text-fill-color: #FFFFFF !important;
 }
